@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.unity3d.ads.IUnityAdsListener;
 import com.unity3d.ads.UnityAds;
@@ -14,10 +15,11 @@ import com.unity3d.services.banners.UnityBanners;
 
 public class MainActivity extends AppCompatActivity{
 
-    private String GameID="4245531";
-    private String bannerPlacement="CpuBanner";
+    private String GameID="4147749";
+    private String bannerPlacement="Banner_Android";
+    private String interPlacement="Interstitial_Android";
     private  boolean testMode=true;
-    Button banner;
+    Button banner, interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +27,9 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         banner=findViewById(R.id.banner);
+        interstitial= findViewById(R.id.interstitial);
 
         UnityAds.initialize(this,GameID, testMode);
-
         IUnityBannerListener bannerListener = new IUnityBannerListener() {
             @Override
             public void onUnityBannerLoaded(String s, View view) {
@@ -60,10 +62,32 @@ public class MainActivity extends AppCompatActivity{
 
             }
         };
-
         UnityBanners.setBannerListener(bannerListener);
-       // UnityBanners.loadBanner(this,bannerPlacement);
 
+        IUnityAdsListener interListner= new IUnityAdsListener() {
+            @Override
+            public void onUnityAdsReady(String s) {
+
+            }
+
+            @Override
+            public void onUnityAdsStart(String s) {
+
+            }
+
+            @Override
+            public void onUnityAdsFinish(String s, UnityAds.FinishState finishState) {
+
+            }
+
+            @Override
+            public void onUnityAdsError(UnityAds.UnityAdsError unityAdsError, String s) {
+
+            }
+        };
+        UnityAds.setListener(interListner);
+        UnityAds.load(interPlacement);
+       // UnityBanners.loadBanner(this,bannerPlacement);
         banner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,9 +95,15 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        interstitial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
-
+                if(UnityAds.isReady(interPlacement)){
+                    UnityAds.show(MainActivity.this,interPlacement);
+                }
+            }
+        });
     }
 
     @Override
