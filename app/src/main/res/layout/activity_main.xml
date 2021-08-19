@@ -20,13 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/banner"
         android:text="Show Interstitial" />
+
     <Button
 
         android:id="@+id/rewarded"
-        android:layout_below="@id/interstitial"
-        android:text="Show Rewarded Video"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/interstitial"
+        android:text="Show Rewarded Video" />
 
     <LinearLayout
         android:gravity="center"
